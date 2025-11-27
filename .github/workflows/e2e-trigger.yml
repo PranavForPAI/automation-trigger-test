@@ -1,0 +1,22 @@
+name: Trigger Automation Tests
+
+on:
+  workflow_run:
+    workflows: ["Azure Static Web Apps CI/CD"]
+    types:
+      - completed
+    branches:
+      - dev
+
+jobs:
+  trigger-external-qa:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger E2E in QA Repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.AUTOMATION_PAT_TOKEN }}
+          repository: clickBACON/clickBACON-Testing-Automation
+          event-type: trigger-e2e
+          client-payload: '{"target_url": "https://devv2.clickbacon.com/"}'
