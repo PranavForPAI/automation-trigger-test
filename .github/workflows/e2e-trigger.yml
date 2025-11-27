@@ -20,3 +20,5 @@ jobs:
           repository: clickBACON/clickBACON-Testing-Automation
           event-type: trigger-e2e
           client-payload: '{"target_url": "https://devv2.clickbacon.com/"}'
+
+# Comment to imitate push to dev to triggere workflow
